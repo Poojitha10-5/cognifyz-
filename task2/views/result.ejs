@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registration Successful</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Success icon and message -->
+      <div style="text-align: center; padding: 20px 0 30px">
+        <div style="font-size: 72px">✅</div>
+        <h1 style="color: #4caf50; font-size: 26px; margin: 12px 0 8px">
+          Registration Successful!
+        </h1>
+        <p style="color: #888; font-size: 14px">
+          Your data passed all validations and has been stored on the server.
+        </p>
+      </div>
+
+      <!-- Summary card -->
+      <div
+        style="
+          background: #f8f7ff;
+          border: 2px solid #e0deff;
+          border-radius: 12px;
+          padding: 24px;
+        "
+      >
+        <h3 style="color: #6c63ff; margin-bottom: 16px; font-size: 16px">
+          📄 Your Submission Details
+        </h3>
+
+        <!-- Each row shows one field -->
+        <div
+          style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee"
+        >
+          <span
+            style="
+              width: 100px;
+              color: #999;
+              font-size: 13px;
+              font-weight: bold;
+            "
+            >ID</span
+          >
+          <span style="color: #333; font-size: 14px"
+            >#<%= submission.id %></span
+          >
+        </div>
+
+        <div
+          style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee"
+        >
+          <span
+            style="
+              width: 100px;
+              color: #999;
+              font-size: 13px;
+              font-weight: bold;
+            "
+            >Name</span
+          >
+          <span style="color: #333; font-size: 14px"
+            ><%= submission.name %></span
+          >
+        </div>
+
+        <div
+          style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee"
+        >
+          <span
+            style="
+              width: 100px;
+              color: #999;
+              font-size: 13px;
+              font-weight: bold;
+            "
+            >Email</span
+          >
+          <span style="color: #333; font-size: 14px"
+            ><%= submission.email %></span
+          >
+        </div>
+
+        <div
+          style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee"
+        >
+          <span
+            style="
+              width: 100px;
+              color: #999;
+              font-size: 13px;
+              font-weight: bold;
+            "
+            >Phone</span
+          >
+          <span style="color: #333; font-size: 14px"
+            ><%= submission.phone %></span
+          >
+        </div>
+
+        <div
+          style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee"
+        >
+          <span
+            style="
+              width: 100px;
+              color: #999;
+              font-size: 13px;
+              font-weight: bold;
+            "
+            >Age</span
+          >
+          <span style="color: #333; font-size: 14px"
+            ><%= submission.age %></span
+          >
+        </div>
+
+        <div
+          style="display: flex; padding: 10px 0; border-bottom: 1px solid #eee"
+        >
+          <span
+            style="
+              width: 100px;
+              color: #999;
+              font-size: 13px;
+              font-weight: bold;
+            "
+            >Message</span
+          >
+          <span style="color: #333; font-size: 14px"
+            ><%= submission.message %></span
+          >
+        </div>
+
+        <div style="display: flex; padding: 10px 0">
+          <span
+            style="
+              width: 100px;
+              color: #999;
+              font-size: 13px;
+              font-weight: bold;
+            "
+            >Date</span
+          >
+          <span style="color: #333; font-size: 14px"
+            ><%= submission.date %></span
+          >
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div style="display: flex; gap: 12px; margin-top: 24px">
+        <a
+          href="/"
+          style="
+            flex: 1;
+            padding: 12px;
+            background: #6c63ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+          "
+        >
+          ← Submit Another
+        </a>
+        <a
+          href="/submissions"
+          style="
+            flex: 1;
+            padding: 12px;
+            background: white;
+            color: #6c63ff;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            border: 2px solid #6c63ff;
+          "
+        >
+          📋 All Submissions
+        </a>
+      </div>
+    </div>
+  </body>
+</html>

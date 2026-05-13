@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Task 2 - Registration Form</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<!-- ── MAIN CONTAINER ─────────────────────────────────── -->
+<div class="container">
+
+  <!-- Title with inline style -->
+  <h1 style="
+    color: #6c63ff;
+    font-size: 26px;
+    margin-bottom: 6px;
+    text-align: center;
+  ">
+    📋 Registration Form
+  </h1>
+
+  <p style="
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+    margin-bottom: 28px;
+  ">
+    Fill in all fields. We check your data on both sides!
+  </p>
+
+  <!-- ── SERVER-SIDE ERRORS (shown after server rejects) ── -->
+  <% if (errors.length > 0) { %>
+    <div style="
+      background: #fff0f0;
+      border: 1px solid #f44336;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+    ">
+      <p style="color: #c62828; font-weight: bold; margin-bottom: 8px;">
+        ⚠️ Please fix these errors:
+      </p>
+      <ul style="color: #c62828; padding-left: 20px;">
+        <% errors.forEach(function(err) { %>
+          <li style="margin-bottom: 4px; font-size: 14px;">
+            <%= err.msg %>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>
+
+  <!-- ── THE FORM ──────────────────────────────────────── -->
+  <form
+    action="/submit"
+    method="POST"
+    onsubmit="return validateForm()"
+  >
+
+    <!-- FULL NAME -->
+    <div style="margin-bottom: 18px;">
+      <label style="
+        display: block;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 6px;
+        font-size: 14px;
+      ">
+        Full Name <span style="color: red;">*</span>
+      </label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        value="<%= old.name || '' %>"
+        placeholder="Enter your full name"
+        style="
+          width: 100%;
+          padding: 12px 14px;
+          border: 2px solid #ddd;
+          border-radius: 8px;
+          font-size: 14px;
+          transition: border-color 0.2s;
+        "
+        onfocus="this.style.borderColor='#6c63ff'"
+        onblur="this.style.borderColor='#ddd'"
+        oninput="hideError('nameError')"
+      />
+      <!-- Client-side error message for this field -->
+      <p id="nameError" style="
+        color: #f44336;
+        font-size: 12px;
+        margin-top: 4px;
+        display: none;
+      "></p>
+    </div>
+
+    <!-- EMAIL -->
+    <div style="margin-bottom: 18px;">
+      <label style="
+        display: block;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 6px;
+        font-size: 14px;
+      ">
+        Email Address <span style="color: red;">*</span>
+      </label>
+      <input
+        type="email"
+        name="email"
+        id="email"
+        value="<%= old.email || '' %>"
+        placeholder="you@example.com"
+        style="
+          width: 100%;
+          padding: 12px 14px;
+          border: 2px solid #ddd;
+          border-radius: 8px;
+          font-size: 14px;
+        "
+        onfocus="this.style.borderColor='#6c63ff'"
+        onblur="this.style.borderColor='#ddd'"
+        oninput="hideError('emailError')"
+      />
+      <p id="emailError" style="
+        color: #f44336;
+        font-size: 12px;
+        margin-top: 4px;
+        display: none;
+      "></p>
+    </div>
+
+    <!-- PHONE NUMBER -->
+    <div style="margin-bottom: 18px;">
+      <label style="
+        display: block;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 6px;
+        font-size: 14px;
+      ">
+        Phone Number <span style="color: red;">*</span>
+      </label>
+      <input
+        type="tel"
+        name="phone"
+        id="phone"
+        value="<%= old.phone || '' %>"
+        placeholder="10 digit number e.g. 9876543210"
+        maxlength="10"
+        style="
+          width: 100%;
+          padding: 12px 14px;
+          border: 2px solid #ddd;
+          border-radius: 8px;
+          font-size: 14px;
+        "
+        onfocus="this.style.borderColor='#6c63ff'"
+        onblur="this.style.borderColor='#ddd'"
+        oninput="hideError('phoneError')"
+      />
+      <p id="phoneError" style="
+        color: #f44336;
+        font-size: 12px;
+        margin-top: 4px;
+        display: none;
+      "></p>
+    </div>
+
+    <!-- AGE -->
+    <div style="margin-bottom: 18px;">
+      <label style="
+        display: block;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 6px;
+        font-size: 14px;
+      ">
+        Age <span style="color: red;">*</span>
+      </label>
+      <input
+        type="number"
+        name="age"
+        id="age"
+        value="<%= old.age || '' %>"
+        placeholder="Must be 18 or above"
+        min="18"
+        max="100"
+        style="
+          width: 100%;
+          padding: 12px 14px;
+          border: 2px solid #ddd;
+          border-radius: 8px;
+          font-size: 14px;
+        "
+        onfocus="this.style.borderColor='#6c63ff'"
+        onblur="this.style.borderColor='#ddd'"
+        oninput="hideError('ageError')"
+      />
+      <p id="ageError" style="
+        color: #f44336;
+        font-size: 12px;
+        margin-top: 4px;
+        display: none;
+      "></p>
+    </div>
+
+    <!-- MESSAGE -->
+    <div style="margin-bottom: 18px;">
+      <label style="
+        display: block;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 6px;
+        font-size: 14px;
+      ">
+        Message <span style="color: red;">*</span>
+      </label>
+      <textarea
+        name="message"
+        id="message"
+        rows="4"
+        placeholder="Write at least 10 characters..."
+        style="
+          width: 100%;
+          padding: 12px 14px;
+          border: 2px solid #ddd;
+          border-radius: 8px;
+          font-size: 14px;
+          resize: vertical;
+        "
+        onfocus="this.style.borderColor='#6c63ff'"
+        onblur="this.style.borderColor='#ddd'"
+        oninput="updateCount(this); hideError('messageError')"
+      ><%= old.message || '' %></textarea>
+
+      <!-- Character counter + error side by side -->
+      <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+        <p id="messageError" style="
+          color: #f44336;
+          font-size: 12px;
+          display: none;
+        "></p>
+        <p id="charCount" style="
+          color: #aaa;
+          font-size: 12px;
+          margin-left: auto;
+        ">
+          0 / minimum 10 characters
+        </p>
+      </div>
+    </div>
+
+    <!-- TERMS CHECKBOX -->
+    <div style="
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    ">
+      <input
+        type="checkbox"
+        name="agree"
+        id="agree"
+        value="yes"
+        style="width: 18px; height: 18px; cursor: pointer; accent-color: #6c63ff;"
+        <%= old.agree ? 'checked' : '' %>
+        onchange="hideError('agreeError')"
+      />
+      <label for="agree" style="
+        color: #555;
+        font-size: 14px;
+        cursor: pointer;
+      ">
+        I agree to the
+        <a href="#" style="color: #6c63ff; text-decoration: none;">
+          Terms and Conditions
+        </a>
+      </label>
+    </div>
+    <p id="agreeError" style="
+      color: #f44336;
+      font-size: 12px;
+      margin-bottom: 16px;
+      display: none;
+    "></p>
+
+    <!-- SUBMIT BUTTON -->
+    <button
+      type="submit"
+      id="submitBtn"
+      style="
+        width: 100%;
+        padding: 14px;
+        background: #6c63ff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.1s;
+      "
+      onmouseover="this.style.background='#5548e0'"
+      onmouseout="this.style.background='#6c63ff'"
+      onmousedown="this.style.transform='scale(0.98)'"
+      onmouseup="this.style.transform='scale(1)'"
+    >
+      Submit Registration
+    </button>
+
+  </form>
+
+  <!-- Link to view all submissions -->
+  <p style="text-align: center; margin-top: 20px; font-size: 13px;">
+    <a href="/submissions" style="color: #6c63ff; text-decoration: none;">
+      📋 View all stored submissions →
+    </a>
+  </p>
+
+</div>
+
+
+<!-- ════════════════════════════════════════════════════════
+     INLINE JAVASCRIPT — CLIENT SIDE VALIDATION
+     This runs in the BROWSER before data goes to server
+═══════════════════════════════════════════════════════════ -->
+<script>
+
+  // ── Helper: show an error message ──────────────────────
+  function showError(id, message) {
+    const el = document.getElementById(id);
+    el.textContent = message;
+    el.style.display = 'block';
+  }
+
+  // ── Helper: hide an error message ──────────────────────
+  function hideError(id) {
+    const el = document.getElementById(id);
+    el.style.display = 'none';
+  }
+
+  // ── Update character count for message textarea ────────
+  function updateCount(textarea) {
+    const count = textarea.value.length;
+    const counter = document.getElementById('charCount');
+    counter.textContent = count + ' / minimum 10 characters';
+
+    // Turn green when enough characters typed
+    if (count >= 10) {
+      counter.style.color = '#4caf50';
+    } else {
+      counter.style.color = '#f44336';
+    }
+  }
+
+  // ── MAIN VALIDATION FUNCTION ───────────────────────────
+  // Called when user clicks Submit
+  // Returns true = form submits, false = form is blocked
+  function validateForm() {
+
+    let isValid = true; // assume valid, set false if any error
+
+    // Get all field values
+    const name    = document.getElementById('name').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const phone   = document.getElementById('phone').value.trim();
+    const age     = parseInt(document.getElementById('age').value);
+    const message = document.getElementById('message').value.trim();
+    const agree   = document.getElementById('agree').checked;
+
+    // ── Validate Name ─────────────────────────────────
+    if (name === '') {
+      showError('nameError', '⚠ Name is required');
+      isValid = false;
+    } else if (name.length < 2) {
+      showError('nameError', '⚠ Name must be at least 2 characters');
+      isValid = false;
+    } else {
+      hideError('nameError');
+    }
+
+    // ── Validate Email ────────────────────────────────
+    // Regex checks for valid email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email === '') {
+      showError('emailError', '⚠ Email is required');
+      isValid = false;
+    } else if (!emailRegex.test(email)) {
+      showError('emailError', '⚠ Please enter a valid email address');
+      isValid = false;
+    } else {
+      hideError('emailError');
+    }
+
+    // ── Validate Phone ────────────────────────────────
+    // Must be exactly 10 digits
+    const phoneRegex = /^[0-9]{10}$/;
+    if (phone === '') {
+      showError('phoneError', '⚠ Phone number is required');
+      isValid = false;
+    } else if (!phoneRegex.test(phone)) {
+      showError('phoneError', '⚠ Phone must be exactly 10 digits');
+      isValid = false;
+    } else {
+      hideError('phoneError');
+    }
+
+    // ── Validate Age ──────────────────────────────────
+    if (isNaN(age)) {
+      showError('ageError', '⚠ Age is required');
+      isValid = false;
+    } else if (age < 18) {
+      showError('ageError', '⚠ You must be at least 18 years old');
+      isValid = false;
+    } else if (age > 100) {
+      showError('ageError', '⚠ Please enter a valid age');
+      isValid = false;
+    } else {
+      hideError('ageError');
+    }
+
+    // ── Validate Message ──────────────────────────────
+    if (message === '') {
+      showError('messageError', '⚠ Message is required');
+      isValid = false;
+    } else if (message.length < 10) {
+      showError('messageError', '⚠ Message must be at least 10 characters');
+      isValid = false;
+    } else {
+      hideError('messageError');
+    }
+
+    // ── Validate Checkbox ─────────────────────────────
+    if (!agree) {
+      showError('agreeError', '⚠ You must agree to the terms');
+      isValid = false;
+    } else {
+      hideError('agreeError');
+    }
+
+    // If isValid is false, form will NOT submit
+    // If isValid is true, form WILL submit to server
+    return isValid;
+  }
+
+</script>
+
+</body>
+</html>

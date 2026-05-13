@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Submissions</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<div class="container" style="max-width: 700px;">
+
+  <h1 style="color: #6c63ff; font-size: 24px; margin-bottom: 6px;">
+    📋 All Submissions
+  </h1>
+  <p style="color: #aaa; font-size: 13px; margin-bottom: 24px;">
+    Total: <%= submissions.length %> record(s) stored in server memory
+  </p>
+
+  <!-- If no submissions yet -->
+  <% if (submissions.length === 0) { %>
+    <div style="
+      text-align: center;
+      padding: 60px 20px;
+      color: #ccc;
+      border: 2px dashed #eee;
+      border-radius: 12px;
+    ">
+      <p style="font-size: 48px; margin-bottom: 12px;">📭</p>
+      <p style="font-size: 16px;">No submissions yet!</p>
+      <a href="/" style="color: #6c63ff; font-size: 14px;">
+        Fill the form →
+      </a>
+    </div>
+
+  <!-- If there are submissions -->
+  <% } else { %>
+    <% submissions.forEach(function(s) { %>
+      <div style="
+        background: white;
+        border: 1px solid #e8e6ff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 8px rgba(108,99,255,0.08);
+      ">
+        <!-- Header row -->
+        <div style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 10px;
+        ">
+          <span style="
+            font-weight: bold;
+            color: #6c63ff;
+            font-size: 15px;
+          ">
+            #<%= s.id %> — <%= s.name %>
+          </span>
+          <span style="
+            font-size: 11px;
+            color: #bbb;
+          ">
+            <%= s.date %>
+          </span>
+        </div>
+
+        <!-- Contact info -->
+        <p style="color: #666; font-size: 13px; margin-bottom: 6px;">
+          📧 <%= s.email %>
+          &nbsp;|&nbsp;
+          📞 <%= s.phone %>
+          &nbsp;|&nbsp;
+          🎂 Age: <%= s.age %>
+        </p>
+
+        <!-- Message -->
+        <p style="
+          color: #888;
+          font-size: 13px;
+          font-style: italic;
+          border-left: 3px solid #6c63ff;
+          padding-left: 10px;
+          margin-top: 8px;
+        ">
+          "<%= s.message %>"
+        </p>
+      </div>
+    <% }) %>
+  <% } %>
+
+  <a href="/" style="
+    display: inline-block;
+    margin-top: 8px;
+    color: #6c63ff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+  ">
+    ← Back to Form
+  </a>
+
+</div>
+</body>
+</html>
