@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form Submitted</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>✅ Thank you, <%= name %>!</h1>
+      <p>
+        We received your message and will reply to
+        <strong><%= email %></strong>.
+      </p>
+
+      <div class="message-box">
+        <h3>Your Message:</h3>
+        <p><%= message %></p>
+      </div>
+
+      <a href="/" class="back-btn">← Go Back</a>
+    </div>
+  </body>
+</html>
