@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+
+    <!-- Bootstrap CSS (from CDN - no install needed) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- ════════════════════════════════════════════════════
+     SECTION 1: NAVBAR
+     Bootstrap navbar that collapses on mobile
+════════════════════════════════════════════════════ -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+      <div class="container">
+        <!-- Brand/Logo -->
+        <a class="navbar-brand fw-bold" href="/">
+          <i class="bi bi-code-slash"></i> Cognifyz
+        </a>
+
+        <!-- Hamburger button (shows on mobile) -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Nav links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a
+                class="nav-link <%= activePage==='home' ? 'active' : '' %>"
+                href="/"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link <%= activePage==='about' ? 'active' : '' %>"
+                href="/about"
+                >About</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link <%= activePage==='contact' ? 'active' : '' %>"
+                href="/contact"
+                >Contact</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ════════════════════════════════════════════════════
+     SECTION 2: HERO SECTION
+     Big banner at the top of the page
+════════════════════════════════════════════════════ -->
+    <section class="hero-section">
+      <div class="container text-center">
+        <div class="hero-badge animate-fadeInDown">
+          🚀 Level 2 — Intermediate
+        </div>
+
+        <h1 class="hero-title animate-fadeInUp">
+          Advanced CSS &<br />Responsive Design
+        </h1>
+
+        <p class="hero-subtitle animate-fadeInUp delay-1">
+          Beautiful layouts, smooth animations,<br />
+          and fully responsive across all devices.
+        </p>
+
+        <div class="animate-fadeInUp delay-2">
+          <a href="/contact" class="btn btn-primary btn-lg me-3 hero-btn">
+            Get Started <i class="bi bi-arrow-right"></i>
+          </a>
+          <a href="/about" class="btn btn-outline-light btn-lg hero-btn">
+            Learn More
+          </a>
+        </div>
+      </div>
+
+      <!-- Animated background shapes -->
+      <div class="hero-shape shape-1"></div>
+      <div class="hero-shape shape-2"></div>
+      <div class="hero-shape shape-3"></div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+     SECTION 3: STATS COUNTER
+════════════════════════════════════════════════════ -->
+    <section class="stats-section">
+      <div class="container">
+        <div class="row text-center">
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <div class="stat-card">
+              <div class="stat-number" data-target="500">0</div>
+              <div class="stat-label">Students</div>
+            </div>
+          </div>
+
+          <div class="col-6 col-md-3 mb-4 mb-md-0">
+            <div class="stat-card">
+              <div class="stat-number" data-target="8">0</div>
+              <div class="stat-label">Tasks</div>
+            </div>
+          </div>
+
+          <div class="col-6 col-md-3">
+            <div class="stat-card">
+              <div class="stat-number" data-target="4">0</div>
+              <div class="stat-label">Levels</div>
+            </div>
+          </div>
+
+          <div class="col-6 col-md-3">
+            <div class="stat-card">
+              <div class="stat-number" data-target="100">0</div>
+              <div class="stat-label">% Practical</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+     SECTION 4: FEATURES / CARDS
+════════════════════════════════════════════════════ -->
+    <section class="features-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-badge">What You Learn</span>
+          <h2 class="section-title">Core Concepts Covered</h2>
+          <p class="section-subtitle">Each task builds on the previous one</p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Card 1 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon" style="background: #fff0f5">
+                <i class="bi bi-file-earmark-code" style="color: #e91e8c"></i>
+              </div>
+              <h4>HTML Structure</h4>
+              <p>
+                Build semantic HTML forms and page layouts for user interaction.
+              </p>
+              <span class="task-badge">Task 1</span>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon" style="background: #f0f0ff">
+                <i class="bi bi-check2-circle" style="color: #6c63ff"></i>
+              </div>
+              <h4>Form Validation</h4>
+              <p>
+                Client-side JS and server-side validation for secure data
+                handling.
+              </p>
+              <span class="task-badge">Task 2</span>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card active-card">
+              <div class="feature-icon" style="background: #f0fff4">
+                <i class="bi bi-palette" style="color: #4caf50"></i>
+              </div>
+              <h4>Advanced CSS</h4>
+              <p>
+                Animations, transitions, Bootstrap framework and responsive
+                design.
+              </p>
+              <span class="task-badge badge-active">Task 3 ← You are here</span>
+            </div>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon" style="background: #fff8e1">
+                <i class="bi bi-layers" style="color: #ff9800"></i>
+              </div>
+              <h4>Dynamic DOM</h4>
+              <p>
+                Dynamically update page content using JavaScript without
+                reloading.
+              </p>
+              <span class="task-badge">Task 4</span>
+            </div>
+          </div>
+
+          <!-- Card 5 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon" style="background: #e8f5e9">
+                <i class="bi bi-cloud-arrow-up" style="color: #2196f3"></i>
+              </div>
+              <h4>REST API</h4>
+              <p>Build and consume RESTful APIs with full CRUD operations.</p>
+              <span class="task-badge">Task 5</span>
+            </div>
+          </div>
+
+          <!-- Card 6 -->
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card">
+              <div class="feature-icon" style="background: #fce4ec">
+                <i class="bi bi-database" style="color: #f44336"></i>
+              </div>
+              <h4>Database & Auth</h4>
+              <p>MongoDB integration and secure user authentication system.</p>
+              <span class="task-badge">Task 6</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+     SECTION 5: PROGRESS / TIMELINE
+════════════════════════════════════════════════════ -->
+    <section class="timeline-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-badge">Roadmap</span>
+          <h2 class="section-title">Your Learning Path</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot done">✓</div>
+            <div class="timeline-content">
+              <span class="tl-level beginner">Beginner</span>
+              <h5>Task 1 & 2</h5>
+              <p>HTML, Node.js, EJS, Form Validation</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot current">●</div>
+            <div class="timeline-content">
+              <span class="tl-level intermediate">Intermediate</span>
+              <h5>Task 3 & 4</h5>
+              <p>CSS, Bootstrap, DOM Manipulation</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot">3</div>
+            <div class="timeline-content">
+              <span class="tl-level advanced">Advanced</span>
+              <h5>Task 5 & 6</h5>
+              <p>REST API, MongoDB, Authentication</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot">4</div>
+            <div class="timeline-content">
+              <span class="tl-level expert">Expert</span>
+              <h5>Task 7 & 8</h5>
+              <p>External APIs, Redis, Caching</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+     SECTION 6: CSS DEMO — Show off animations
+════════════════════════════════════════════════════ -->
+    <section class="demo-section">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-badge">Live Demo</span>
+          <h2 class="section-title">CSS Animations & Transitions</h2>
+          <p class="section-subtitle">Hover over the cards below</p>
+        </div>
+
+        <div class="row g-4">
+          <!-- Hover lift card -->
+          <div class="col-12 col-md-4">
+            <div class="demo-card hover-lift">
+              <i class="bi bi-arrow-up-circle demo-icon"></i>
+              <h5>Hover Lift</h5>
+              <p>Card lifts up on hover using CSS transform</p>
+              <code>transform: translateY(-8px)</code>
+            </div>
+          </div>
+
+          <!-- Color change card -->
+          <div class="col-12 col-md-4">
+            <div class="demo-card hover-color">
+              <i class="bi bi-palette demo-icon"></i>
+              <h5>Color Transition</h5>
+              <p>Background smoothly transitions on hover</p>
+              <code>transition: background 0.3s ease</code>
+            </div>
+          </div>
+
+          <!-- Pulse animation card -->
+          <div class="col-12 col-md-4">
+            <div class="demo-card pulse-card">
+              <i class="bi bi-circle demo-icon pulse-icon"></i>
+              <h5>Pulse Animation</h5>
+              <p>Continuous animation using CSS keyframes</p>
+              <code>@keyframes pulse</code>
+            </div>
+          </div>
+        </div>
+
+        <!-- Progress bars with animation -->
+        <div class="progress-demo mt-5">
+          <h4 class="text-center mb-4" style="color: #333">
+            Animated Progress Bars
+          </h4>
+
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="skill-label">HTML & CSS</span>
+              <span class="skill-percent">90%</span>
+            </div>
+            <div class="progress custom-progress">
+              <div
+                class="progress-bar"
+                data-width="90"
+                style="background: linear-gradient(90deg, #6c63ff, #e91e8c)"
+              ></div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="skill-label">JavaScript</span>
+              <span class="skill-percent">75%</span>
+            </div>
+            <div class="progress custom-progress">
+              <div
+                class="progress-bar"
+                data-width="75"
+                style="background: linear-gradient(90deg, #ff9800, #f44336)"
+              ></div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="skill-label">Node.js</span>
+              <span class="skill-percent">60%</span>
+            </div>
+            <div class="progress custom-progress">
+              <div
+                class="progress-bar"
+                data-width="60"
+                style="background: linear-gradient(90deg, #4caf50, #2196f3)"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+     SECTION 7: CTA SECTION
+════════════════════════════════════════════════════ -->
+    <section class="cta-section">
+      <div class="container text-center">
+        <h2 class="cta-title">Ready to Continue?</h2>
+        <p class="cta-subtitle">Move on to Task 4 — Dynamic DOM Manipulation</p>
+        <a href="/contact" class="btn btn-light btn-lg cta-btn">
+          Get In Touch <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════
+     SECTION 8: FOOTER
+════════════════════════════════════════════════════ -->
+    <footer class="custom-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-4 mb-4 mb-md-0">
+            <h5 class="footer-brand">
+              <i class="bi bi-code-slash"></i> Cognifyz
+            </h5>
+            <p class="footer-desc">
+              A hands-on web development internship program.
+            </p>
+          </div>
+
+          <div class="col-6 col-md-2 mb-4 mb-md-0">
+            <h6 class="footer-heading">Tasks</h6>
+            <ul class="footer-links">
+              <li><a href="/">Task 1</a></li>
+              <li><a href="/">Task 2</a></li>
+              <li><a href="/">Task 3</a></li>
+              <li><a href="/">Task 4</a></li>
+            </ul>
+          </div>
+
+          <div class="col-6 col-md-2 mb-4 mb-md-0">
+            <h6 class="footer-heading">Pages</h6>
+            <ul class="footer-links">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a></li>
+            </ul>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <h6 class="footer-heading">Tools Used</h6>
+            <div class="tech-tags">
+              <span class="tech-tag">Node.js</span>
+              <span class="tech-tag">Express</span>
+              <span class="tech-tag">EJS</span>
+              <span class="tech-tag">Bootstrap</span>
+              <span class="tech-tag">CSS3</span>
+              <span class="tech-tag">Git</span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="footer-divider" />
+        <p class="footer-copy text-center">
+          © 2024 Cognifyz Web Tasks. Built with ❤️ using Node.js & Bootstrap.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS (required for navbar toggle on mobile) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Our Custom JS -->
+    <script src="/js/main.js"></script>
+  </body>
+</html>

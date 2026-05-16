@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top custom-navbar">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="/">
+          <i class="bi bi-code-slash"></i> Cognifyz
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="container text-center">
+        <h1 class="animate-fadeInUp">Contact Us</h1>
+        <p class="animate-fadeInUp delay-1">We'd love to hear from you</p>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+      <div class="container">
+        <div class="row g-5">
+          <!-- Left: Contact Info -->
+          <div class="col-12 col-lg-5">
+            <h3 style="color: #333; margin-bottom: 24px">Get In Touch</h3>
+
+            <div class="contact-info-card">
+              <div class="contact-info-icon" style="background: #f0f0ff">
+                <i class="bi bi-envelope-fill" style="color: #6c63ff"></i>
+              </div>
+              <div>
+                <h6>Email</h6>
+                <p>hello@cognifyz.com</p>
+              </div>
+            </div>
+
+            <div class="contact-info-card">
+              <div class="contact-info-icon" style="background: #f0fff4">
+                <i class="bi bi-telephone-fill" style="color: #4caf50"></i>
+              </div>
+              <div>
+                <h6>Phone</h6>
+                <p>+91 98765 43210</p>
+              </div>
+            </div>
+
+            <div class="contact-info-card">
+              <div class="contact-info-icon" style="background: #fff8e1">
+                <i class="bi bi-geo-alt-fill" style="color: #ff9800"></i>
+              </div>
+              <div>
+                <h6>Location</h6>
+                <p>Bengaluru, Karnataka, India</p>
+              </div>
+            </div>
+
+            <!-- Social icons -->
+            <div class="social-links mt-4">
+              <a href="#" class="social-icon">
+                <i class="bi bi-github"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="bi bi-linkedin"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="bi bi-twitter-x"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: Contact Form -->
+          <div class="col-12 col-lg-7">
+            <div class="contact-form-card">
+              <h3 style="color: #333; margin-bottom: 24px">Send a Message</h3>
+
+              <div class="row g-3">
+                <div class="col-12 col-sm-6">
+                  <label class="form-label fw-bold" style="font-size: 14px">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="John"
+                  />
+                </div>
+                <div class="col-12 col-sm-6">
+                  <label class="form-label fw-bold" style="font-size: 14px">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="Doe"
+                  />
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-bold" style="font-size: 14px">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    class="form-control custom-input"
+                    placeholder="john@example.com"
+                  />
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-bold" style="font-size: 14px">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control custom-input"
+                    placeholder="What is this about?"
+                  />
+                </div>
+                <div class="col-12">
+                  <label class="form-label fw-bold" style="font-size: 14px">
+                    Message
+                  </label>
+                  <textarea
+                    class="form-control custom-input"
+                    rows="5"
+                    placeholder="Write your message here..."
+                  ></textarea>
+                </div>
+                <div class="col-12">
+                  <button
+                    type="button"
+                    class="btn btn-primary w-100 submit-btn"
+                    onclick="showSuccess()"
+                  >
+                    Send Message
+                    <i class="bi bi-send ms-2"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Success message (hidden initially) -->
+              <div
+                id="successMsg"
+                style="
+                  display: none;
+                  background: #f0fff4;
+                  border: 1px solid #4caf50;
+                  border-radius: 10px;
+                  padding: 16px;
+                  margin-top: 16px;
+                  text-align: center;
+                  color: #2e7d32;
+                "
+              >
+                ✅ Message sent successfully! We'll get back to you soon.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="custom-footer">
+      <div class="container text-center">
+        <p class="footer-copy">
+          © 2024 Cognifyz Web Tasks. Built with Node.js & Bootstrap.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/main.js"></script>
+
+    <script>
+      function showSuccess() {
+        document.getElementById("successMsg").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("successMsg").style.display = "none";
+        }, 4000);
+      }
+    </script>
+  </body>
+</html>
