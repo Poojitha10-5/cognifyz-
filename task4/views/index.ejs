@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 4 - Dynamic DOM</title>
+    <link rel="stylesheet" href="/css/style.css" />
+
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- ════════════════════════════════════════════
+     NAVBAR — Client-side routing
+     Clicking links does NOT reload the page
+     JavaScript handles showing/hiding sections
+════════════════════════════════════════════ -->
+    <nav class="navbar">
+      <div class="nav-brand">
+        <i class="bi bi-code-slash"></i> Cognifyz Task 4
+      </div>
+      <div class="nav-links">
+        <a href="#" class="nav-link active" onclick="showPage('registration')">
+          <i class="bi bi-person-plus"></i> Register
+        </a>
+        <a href="#" class="nav-link" onclick="showPage('login')">
+          <i class="bi bi-box-arrow-in-right"></i> Login
+        </a>
+        <a href="#" class="nav-link" onclick="showPage('todo')">
+          <i class="bi bi-list-check"></i> Todo List
+        </a>
+        <a href="#" class="nav-link" onclick="showPage('quiz')">
+          <i class="bi bi-question-circle"></i> Quiz
+        </a>
+      </div>
+      <!-- Hamburger for mobile -->
+      <button class="hamburger" onclick="toggleMobileMenu()">
+        <i class="bi bi-list"></i>
+      </button>
+    </nav>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a
+        href="#"
+        onclick="
+          showPage('registration');
+          toggleMobileMenu();
+        "
+        >Register</a
+      >
+      <a
+        href="#"
+        onclick="
+          showPage('login');
+          toggleMobileMenu();
+        "
+        >Login</a
+      >
+      <a
+        href="#"
+        onclick="
+          showPage('todo');
+          toggleMobileMenu();
+        "
+        >Todo List</a
+      >
+      <a
+        href="#"
+        onclick="
+          showPage('quiz');
+          toggleMobileMenu();
+        "
+        >Quiz</a
+      >
+    </div>
+
+    <!-- ════════════════════════════════════════════
+     PAGE 1: REGISTRATION FORM
+     Complex validation with real-time feedback
+════════════════════════════════════════════ -->
+    <div id="page-registration" class="page active-page">
+      <div class="page-container">
+        <div class="form-card">
+          <div class="form-header">
+            <div class="form-icon">
+              <i class="bi bi-person-plus-fill"></i>
+            </div>
+            <h2>Create Account</h2>
+            <p>
+              Fill in the details below. All fields are validated in real-time.
+            </p>
+          </div>
+
+          <!-- Progress bar showing form completion -->
+          <div class="form-progress">
+            <div class="progress-label">
+              <span>Form Progress</span>
+              <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+
+          <form id="registrationForm" onsubmit="handleRegistration(event)">
+            <!-- FULL NAME -->
+            <div class="field-group">
+              <label>Full Name</label>
+              <div class="input-wrap">
+                <i class="bi bi-person input-icon"></i>
+                <input
+                  type="text"
+                  id="regName"
+                  placeholder="Enter your full name"
+                  oninput="
+                    validateName(this);
+                    updateProgress();
+                  "
+                />
+                <span class="input-status" id="regNameStatus"></span>
+              </div>
+              <p class="field-error" id="regNameError"></p>
+              <p class="field-hint">Minimum 2 characters, letters only</p>
+            </div>
+
+            <!-- EMAIL -->
+            <div class="field-group">
+              <label>Email Address</label>
+              <div class="input-wrap">
+                <i class="bi bi-envelope input-icon"></i>
+                <input
+                  type="email"
+                  id="regEmail"
+                  placeholder="you@example.com"
+                  oninput="
+                    validateEmail(this);
+                    updateProgress();
+                  "
+                />
+                <span class="input-status" id="regEmailStatus"></span>
+              </div>
+              <p class="field-error" id="regEmailError"></p>
+            </div>
+
+            <!-- PHONE -->
+            <div class="field-group">
+              <label>Phone Number</label>
+              <div class="input-wrap">
+                <i class="bi bi-telephone input-icon"></i>
+                <input
+                  type="tel"
+                  id="regPhone"
+                  placeholder="10 digit number"
+                  maxlength="10"
+                  oninput="
+                    validatePhone(this);
+                    updateProgress();
+                  "
+                />
+                <span class="input-status" id="regPhoneStatus"></span>
+              </div>
+              <p class="field-error" id="regPhoneError"></p>
+            </div>
+
+            <!-- PASSWORD with strength meter -->
+            <div class="field-group">
+              <label>Password</label>
+              <div class="input-wrap">
+                <i class="bi bi-lock input-icon"></i>
+                <input
+                  type="password"
+                  id="regPassword"
+                  placeholder="Create a strong password"
+                  oninput="
+                    validatePassword(this);
+                    updateProgress();
+                  "
+                />
+                <!-- Toggle password visibility -->
+                <button
+                  type="button"
+                  class="toggle-pass"
+                  onclick="togglePassword('regPassword', this)"
+                >
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+              <p class="field-error" id="regPasswordError"></p>
+
+              <!-- Password strength meter -->
+              <div class="strength-meter" id="strengthMeter">
+                <div class="strength-bars">
+                  <div class="strength-bar" id="bar1"></div>
+                  <div class="strength-bar" id="bar2"></div>
+                  <div class="strength-bar" id="bar3"></div>
+                  <div class="strength-bar" id="bar4"></div>
+                </div>
+                <span class="strength-label" id="strengthLabel">
+                  Enter a password
+                </span>
+              </div>
+
+              <!-- Password requirements checklist -->
+              <div class="password-rules">
+                <div class="rule" id="rule-length">
+                  <i class="bi bi-x-circle"></i>
+                  <span>At least 8 characters</span>
+                </div>
+                <div class="rule" id="rule-upper">
+                  <i class="bi bi-x-circle"></i>
+                  <span>One uppercase letter (A-Z)</span>
+                </div>
+                <div class="rule" id="rule-lower">
+                  <i class="bi bi-x-circle"></i>
+                  <span>One lowercase letter (a-z)</span>
+                </div>
+                <div class="rule" id="rule-number">
+                  <i class="bi bi-x-circle"></i>
+                  <span>One number (0-9)</span>
+                </div>
+                <div class="rule" id="rule-special">
+                  <i class="bi bi-x-circle"></i>
+                  <span>One special character (!@#$%)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- CONFIRM PASSWORD -->
+            <div class="field-group">
+              <label>Confirm Password</label>
+              <div class="input-wrap">
+                <i class="bi bi-lock-fill input-icon"></i>
+                <input
+                  type="password"
+                  id="regConfirm"
+                  placeholder="Repeat your password"
+                  oninput="
+                    validateConfirm(this);
+                    updateProgress();
+                  "
+                />
+                <button
+                  type="button"
+                  class="toggle-pass"
+                  onclick="togglePassword('regConfirm', this)"
+                >
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+              <p class="field-error" id="regConfirmError"></p>
+            </div>
+
+            <!-- GENDER -->
+            <div class="field-group">
+              <label>Gender</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    onchange="updateProgress()"
+                  />
+                  <span>Male</span>
+                </label>
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    onchange="updateProgress()"
+                  />
+                  <span>Female</span>
+                </label>
+                <label class="radio-option">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="other"
+                    onchange="updateProgress()"
+                  />
+                  <span>Other</span>
+                </label>
+              </div>
+              <p class="field-error" id="regGenderError"></p>
+            </div>
+
+            <!-- SKILLS checkboxes -->
+            <div class="field-group">
+              <label>Your Skills (select at least 1)</label>
+              <div class="checkbox-group">
+                <label class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    value="html"
+                    onchange="updateProgress()"
+                  />
+                  <span>HTML</span>
+                </label>
+                <label class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    value="css"
+                    onchange="updateProgress()"
+                  />
+                  <span>CSS</span>
+                </label>
+                <label class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    value="javascript"
+                    onchange="updateProgress()"
+                  />
+                  <span>JavaScript</span>
+                </label>
+                <label class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    value="nodejs"
+                    onchange="updateProgress()"
+                  />
+                  <span>Node.js</span>
+                </label>
+                <label class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    value="react"
+                    onchange="updateProgress()"
+                  />
+                  <span>React</span>
+                </label>
+                <label class="checkbox-option">
+                  <input
+                    type="checkbox"
+                    value="mongodb"
+                    onchange="updateProgress()"
+                  />
+                  <span>MongoDB</span>
+                </label>
+              </div>
+              <p class="field-error" id="regSkillsError"></p>
+            </div>
+
+            <!-- TERMS -->
+            <div class="field-group">
+              <label class="checkbox-option terms-check">
+                <input
+                  type="checkbox"
+                  id="regTerms"
+                  onchange="updateProgress()"
+                />
+                <span>
+                  I agree to the
+                  <a href="#" style="color: var(--primary)">Terms</a>
+                  and
+                  <a href="#" style="color: var(--primary)">Privacy Policy</a>
+                </span>
+              </label>
+              <p class="field-error" id="regTermsError"></p>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitRegBtn">
+              <i class="bi bi-person-check"></i>
+              Create Account
+            </button>
+          </form>
+        </div>
+
+        <!-- SUCCESS CARD (hidden until form submitted) -->
+        <div class="success-card" id="registrationSuccess">
+          <div class="success-icon">✅</div>
+          <h2>Account Created!</h2>
+          <p id="successMessage"></p>
+          <div class="user-card" id="userCard"></div>
+          <button class="btn-submit" onclick="resetRegistration()">
+            <i class="bi bi-plus-circle"></i> Register Another
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+     PAGE 2: LOGIN FORM
+════════════════════════════════════════════ -->
+    <div id="page-login" class="page">
+      <div class="page-container">
+        <div class="form-card">
+          <div class="form-header">
+            <div
+              class="form-icon"
+              style="background: linear-gradient(135deg, #4caf50, #2196f3)"
+            >
+              <i class="bi bi-box-arrow-in-right"></i>
+            </div>
+            <h2>Welcome Back</h2>
+            <p>Login to your account</p>
+          </div>
+
+          <!-- Login attempt counter (DOM update demo) -->
+          <div class="attempt-counter" id="attemptCounter">
+            <i class="bi bi-shield-check"></i>
+            <span id="attemptText">3 attempts remaining</span>
+          </div>
+
+          <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="field-group">
+              <label>Email Address</label>
+              <div class="input-wrap">
+                <i class="bi bi-envelope input-icon"></i>
+                <input
+                  type="email"
+                  id="loginEmail"
+                  placeholder="you@example.com"
+                  oninput="clearFieldError('loginEmailError')"
+                />
+              </div>
+              <p class="field-error" id="loginEmailError"></p>
+            </div>
+
+            <div class="field-group">
+              <label>Password</label>
+              <div class="input-wrap">
+                <i class="bi bi-lock input-icon"></i>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  placeholder="Enter your password"
+                  oninput="clearFieldError('loginPasswordError')"
+                />
+                <button
+                  type="button"
+                  class="toggle-pass"
+                  onclick="togglePassword('loginPassword', this)"
+                >
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+              <p class="field-error" id="loginPasswordError"></p>
+            </div>
+
+            <!-- Remember me checkbox -->
+            <div class="field-group">
+              <label class="checkbox-option">
+                <input type="checkbox" id="rememberMe" />
+                <span>Remember me for 30 days</span>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              class="btn-submit"
+              style="background: linear-gradient(135deg, #4caf50, #2196f3)"
+            >
+              <i class="bi bi-box-arrow-in-right"></i>
+              Login
+            </button>
+
+            <p
+              style="
+                text-align: center;
+                margin-top: 20px;
+                font-size: 14px;
+                color: #888;
+              "
+            >
+              Don't have an account?
+              <a
+                href="#"
+                onclick="showPage('registration')"
+                style="color: var(--primary); font-weight: bold"
+              >
+                Register here
+              </a>
+            </p>
+          </form>
+
+          <!-- Login result message -->
+          <div id="loginResult" style="display: none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+     PAGE 3: TODO LIST (Dynamic DOM Demo)
+     Add, complete, delete, filter tasks
+════════════════════════════════════════════ -->
+    <div id="page-todo" class="page">
+      <div class="page-container" style="max-width: 700px">
+        <div class="form-card">
+          <div class="form-header">
+            <div
+              class="form-icon"
+              style="background: linear-gradient(135deg, #ff9800, #f44336)"
+            >
+              <i class="bi bi-list-check"></i>
+            </div>
+            <h2>Todo List</h2>
+            <p>
+              Add tasks, mark complete, filter and delete — all without page
+              reload!
+            </p>
+          </div>
+
+          <!-- Stats bar -->
+          <div class="todo-stats">
+            <div class="todo-stat">
+              <span id="totalCount">0</span>
+              <label>Total</label>
+            </div>
+            <div class="todo-stat">
+              <span id="activeCount">0</span>
+              <label>Active</label>
+            </div>
+            <div class="todo-stat">
+              <span id="doneCount">0</span>
+              <label>Done</label>
+            </div>
+          </div>
+
+          <!-- Add new task -->
+          <div class="todo-input-row">
+            <div class="input-wrap" style="flex: 1">
+              <i class="bi bi-plus-circle input-icon"></i>
+              <input
+                type="text"
+                id="todoInput"
+                placeholder="Add a new task and press Enter..."
+                onkeydown="if (event.key === 'Enter') addTodo();"
+              />
+            </div>
+            <select id="todoPriority" class="priority-select">
+              <option value="low">🟢 Low</option>
+              <option value="medium" selected>🟡 Medium</option>
+              <option value="high">🔴 High</option>
+            </select>
+            <button class="btn-add" onclick="addTodo()">
+              <i class="bi bi-plus-lg"></i> Add
+            </button>
+          </div>
+          <p class="field-error" id="todoError"></p>
+
+          <!-- Filter buttons -->
+          <div class="todo-filters">
+            <button
+              class="filter-btn active"
+              onclick="filterTodos('all', this)"
+            >
+              All
+            </button>
+            <button class="filter-btn" onclick="filterTodos('active', this)">
+              Active
+            </button>
+            <button class="filter-btn" onclick="filterTodos('completed', this)">
+              Completed
+            </button>
+            <button class="filter-btn" onclick="filterTodos('high', this)">
+              🔴 High Priority
+            </button>
+          </div>
+
+          <!-- Todo list items go here dynamically -->
+          <div id="todoList" class="todo-list">
+            <div class="empty-state" id="emptyState">
+              <i class="bi bi-inbox"></i>
+              <p>No tasks yet! Add one above.</p>
+            </div>
+          </div>
+
+          <!-- Clear completed button -->
+          <div class="todo-footer">
+            <span id="remainingText" style="color: #888; font-size: 13px">
+              0 tasks remaining
+            </span>
+            <button class="btn-clear" onclick="clearCompleted()">
+              <i class="bi bi-trash"></i> Clear Completed
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════
+     PAGE 4: QUIZ APP (Dynamic DOM Demo)
+════════════════════════════════════════════ -->
+    <div id="page-quiz" class="page">
+      <div class="page-container" style="max-width: 680px">
+        <div class="form-card">
+          <!-- Quiz start screen -->
+          <div id="quizStart">
+            <div class="form-header">
+              <div
+                class="form-icon"
+                style="background: linear-gradient(135deg, #9c27b0, #3f51b5)"
+              >
+                <i class="bi bi-question-circle-fill"></i>
+              </div>
+              <h2>JavaScript Quiz</h2>
+              <p>Test your knowledge! 5 questions, 30 seconds each.</p>
+            </div>
+            <div class="quiz-info">
+              <div class="quiz-info-item">
+                <i class="bi bi-question-circle" style="color: #9c27b0"></i>
+                <span>5 Questions</span>
+              </div>
+              <div class="quiz-info-item">
+                <i class="bi bi-clock" style="color: #ff9800"></i>
+                <span>30 sec per question</span>
+              </div>
+              <div class="quiz-info-item">
+                <i class="bi bi-trophy" style="color: #4caf50"></i>
+                <span>Instant results</span>
+              </div>
+            </div>
+            <button
+              class="btn-submit"
+              style="background: linear-gradient(135deg, #9c27b0, #3f51b5)"
+              onclick="startQuiz()"
+            >
+              <i class="bi bi-play-fill"></i> Start Quiz
+            </button>
+          </div>
+
+          <!-- Quiz question screen (hidden initially) -->
+          <div id="quizQuestion" style="display: none">
+            <!-- Header with timer and progress -->
+            <div class="quiz-header">
+              <span id="questionNumber">Question 1/5</span>
+              <div class="quiz-timer" id="quizTimer">
+                <i class="bi bi-clock"></i>
+                <span id="timerCount">30</span>s
+              </div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="progress-track" style="margin-bottom: 24px">
+              <div
+                class="progress-fill"
+                id="quizProgress"
+                style="background: linear-gradient(90deg, #9c27b0, #3f51b5)"
+              ></div>
+            </div>
+
+            <!-- Question text -->
+            <h3 id="questionText" class="question-text"></h3>
+
+            <!-- Answer options -->
+            <div id="answerOptions" class="answer-options"></div>
+
+            <!-- Feedback message -->
+            <div
+              id="quizFeedback"
+              class="quiz-feedback"
+              style="display: none"
+            ></div>
+
+            <!-- Next button -->
+            <button
+              id="nextBtn"
+              class="btn-submit"
+              style="
+                display: none;
+                background: linear-gradient(135deg, #9c27b0, #3f51b5);
+              "
+              onclick="nextQuestion()"
+            >
+              Next Question <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+
+          <!-- Quiz result screen (hidden initially) -->
+          <div id="quizResult" style="display: none">
+            <div class="form-header">
+              <div class="result-emoji" id="resultEmoji">🏆</div>
+              <h2 id="resultTitle">Quiz Complete!</h2>
+              <p id="resultSubtitle"></p>
+            </div>
+
+            <div class="score-display">
+              <div class="score-circle">
+                <span id="scoreNumber">0</span>
+                <small>/5</small>
+              </div>
+              <p id="scoreMessage"></p>
+            </div>
+
+            <div id="answerReview" class="answer-review"></div>
+
+            <button
+              class="btn-submit"
+              style="
+                background: linear-gradient(135deg, #9c27b0, #3f51b5);
+                margin-top: 24px;
+              "
+              onclick="restartQuiz()"
+            >
+              <i class="bi bi-arrow-repeat"></i> Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load our JavaScript file -->
+    <script src="/js/app.js"></script>
+  </body>
+</html>
