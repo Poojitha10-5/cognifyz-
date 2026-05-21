@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 5 - Notes API</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- ══════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════ -->
+    <nav class="navbar">
+      <div class="nav-brand"><i class="bi bi-journal-code"></i> Notes API</div>
+      <div class="nav-right">
+        <span class="api-badge">
+          <i class="bi bi-circle-fill pulse-dot"></i>
+          API Live
+        </span>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════
+     MAIN LAYOUT
+══════════════════════════════════════ -->
+    <div class="app-layout">
+      <!-- ── LEFT SIDEBAR: Create / Edit Form ── -->
+      <aside class="sidebar">
+        <!-- Stats cards -->
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-box">
+            <span id="statTotal">0</span>
+            <label>Total</label>
+          </div>
+          <div class="stat-box">
+            <span id="statPersonal">0</span>
+            <label>Personal</label>
+          </div>
+          <div class="stat-box">
+            <span id="statWork">0</span>
+            <label>Work</label>
+          </div>
+          <div class="stat-box">
+            <span id="statStudy">0</span>
+            <label>Study</label>
+          </div>
+        </div>
+
+        <!-- Create / Edit note form -->
+        <div class="form-card">
+          <div class="form-card-header">
+            <h3 id="formTitle">
+              <i class="bi bi-plus-circle"></i>
+              New Note
+            </h3>
+            <button
+              id="cancelEditBtn"
+              class="btn-cancel"
+              style="display: none"
+              onclick="cancelEdit()"
+            >
+              Cancel
+            </button>
+          </div>
+
+          <div class="field-group">
+            <label>Title <span class="required">*</span></label>
+            <input
+              type="text"
+              id="noteTitle"
+              placeholder="Note title..."
+              maxlength="100"
+            />
+            <p class="field-error" id="titleError"></p>
+          </div>
+
+          <div class="field-group">
+            <label>Content <span class="required">*</span></label>
+            <textarea
+              id="noteContent"
+              rows="5"
+              placeholder="Write your note here..."
+            ></textarea>
+            <p class="field-error" id="contentError"></p>
+          </div>
+
+          <div class="field-group">
+            <label>Category</label>
+            <select id="noteCategory" class="select-input">
+              <option value="personal">🙋 Personal</option>
+              <option value="work">💼 Work</option>
+              <option value="study">📚 Study</option>
+              <option value="other">📌 Other</option>
+            </select>
+          </div>
+
+          <button
+            class="btn-submit"
+            id="submitNoteBtn"
+            onclick="handleNoteSubmit()"
+          >
+            <i class="bi bi-plus-lg"></i>
+            <span id="submitBtnText">Create Note</span>
+          </button>
+        </div>
+
+        <!-- API Tester Panel -->
+        <div class="api-panel">
+          <h4><i class="bi bi-terminal"></i> API Tester</h4>
+          <p style="font-size: 12px; color: #aaa; margin-bottom: 12px">
+            Test API endpoints directly:
+          </p>
+          <div class="api-btns">
+            <button
+              class="api-test-btn get"
+              onclick="testAPI('GET', '/api/notes')"
+            >
+              GET /api/notes
+            </button>
+            <button
+              class="api-test-btn get"
+              onclick="testAPI('GET', '/api/stats')"
+            >
+              GET /api/stats
+            </button>
+            <button
+              class="api-test-btn delete"
+              onclick="testAPI('GET', '/api/notes/1')"
+            >
+              GET /api/notes/1
+            </button>
+          </div>
+          <div id="apiResponse" class="api-response" style="display: none">
+            <div class="api-response-header">
+              <span id="apiMethod"></span>
+              <span id="apiStatus"></span>
+            </div>
+            <pre id="apiResponseBody"></pre>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ── MAIN CONTENT: Notes List ── -->
+      <main class="main-content">
+        <!-- Search and filter bar -->
+        <div class="toolbar">
+          <div class="search-wrap">
+            <i class="bi bi-search search-icon"></i>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search notes..."
+              oninput="handleSearch(this.value)"
+            />
+          </div>
+
+          <div class="filter-tabs">
+            <button
+              class="filter-tab active"
+              onclick="filterByCategory('all', this)"
+            >
+              All
+            </button>
+            <button
+              class="filter-tab"
+              onclick="filterByCategory('personal', this)"
+            >
+              🙋 Personal
+            </button>
+            <button class="filter-tab" onclick="filterByCategory('work', this)">
+              💼 Work
+            </button>
+            <button
+              class="filter-tab"
+              onclick="filterByCategory('study', this)"
+            >
+              📚 Study
+            </button>
+            <button
+              class="filter-tab"
+              onclick="filterByCategory('other', this)"
+            >
+              📌 Other
+            </button>
+          </div>
+        </div>
+
+        <!-- Notes count and sort -->
+        <div class="notes-header">
+          <span id="notesCount" class="notes-count">Loading...</span>
+          <select
+            id="sortSelect"
+            class="sort-select"
+            onchange="handleSort(this.value)"
+          >
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="title">By Title (A-Z)</option>
+          </select>
+        </div>
+
+        <!-- Loading spinner -->
+        <div id="loadingSpinner" class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Loading notes...</p>
+        </div>
+
+        <!-- Notes grid -->
+        <div id="notesGrid" class="notes-grid" style="display: none"></div>
+
+        <!-- Empty state -->
+        <div id="emptyState" class="empty-state" style="display: none">
+          <i class="bi bi-journal-x"></i>
+          <h3>No notes found</h3>
+          <p>Create your first note using the form on the left!</p>
+        </div>
+      </main>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     DELETE CONFIRMATION MODAL
+══════════════════════════════════════ -->
+    <div id="deleteModal" class="modal-overlay" style="display: none">
+      <div class="modal-box">
+        <div class="modal-icon">🗑️</div>
+        <h3>Delete Note?</h3>
+        <p>Are you sure you want to delete this note? This cannot be undone.</p>
+        <div class="modal-actions">
+          <button class="btn-modal-cancel" onclick="closeDeleteModal()">
+            Cancel
+          </button>
+          <button class="btn-modal-delete" id="confirmDeleteBtn">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+     TOAST NOTIFICATION
+══════════════════════════════════════ -->
+    <div id="toast" class="toast" style="display: none"></div>
+
+    <script src="/js/app.js"></script>
+  </body>
+</html>
